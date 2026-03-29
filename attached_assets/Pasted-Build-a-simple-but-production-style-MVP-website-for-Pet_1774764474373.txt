@@ -1,0 +1,209 @@
+Build a **simple but production-style MVP website** for **PetRetriever**, a digital pet identity and verification platform.
+
+## Goal
+
+Create a **clean, working MVP** with core functionality.
+Do NOT overcomplicate. Focus on **clarity, usability, and real product feel**.
+
+---
+
+## Reference (VERY IMPORTANT)
+
+Use this website as a **design + UX reference**:
+
+👉 https://www.petnow.io/en
+
+Key things to take inspiration from:
+
+* Simple, clean UI
+* Clear explanation of biometric pet identification
+* Minimal friction onboarding (scan → register)
+* Focus on trust and usability
+* Not overly complex or cluttered
+
+DO NOT copy the design directly.
+Instead, build something **similar in simplicity and clarity**, but adapted for PetRetriever.
+
+---
+
+## Tech Stack
+
+* Next.js (App Router)
+* React
+* TypeScript
+* Tailwind CSS
+* PostgreSQL
+* Prisma ORM
+
+---
+
+## Product Context
+
+PetRetriever is a **pet identity platform**, not just an app.
+
+It allows:
+
+* registering pets with identity data
+* verifying pet identity
+* storing vaccination and health records
+* enabling institutions to verify pets
+
+---
+
+## Database (PostgreSQL + Prisma)
+
+Design relational models:
+
+### Pet
+
+* id (UUID)
+* name
+* species
+* breed
+* age
+* gender
+* microchipId (optional)
+* status (Verified / Pending / Incomplete)
+* createdAt
+
+### Owner
+
+* id
+* name
+* phone
+
+### PetOwner
+
+* petId (FK)
+* ownerId (FK)
+
+### VaccinationRecord
+
+* id
+* petId (FK)
+* type
+* date
+* verified
+
+### MedicalRecord
+
+* id
+* petId (FK)
+* notes
+* createdAt
+
+---
+
+## Core Features
+
+### 1. Landing Page
+
+* Clean SaaS-style layout
+* Explain:
+
+  * what PetRetriever is
+  * how it works
+  * why it matters
+* CTA:
+
+  * Register Pet
+  * Verify Pet
+  * Vet Dashboard
+
+---
+
+### 2. Pet Registration
+
+* Simple form
+* Simulate “scan” (image upload instead of real AI)
+* Save data to PostgreSQL
+* Generate unique Pet ID
+
+---
+
+### 3. Pet Verification
+
+Search by:
+
+* Pet ID
+* Owner phone
+* Microchip ID
+
+Display:
+
+* pet details
+* owner info
+* vaccination status
+* verification badge
+
+---
+
+### 4. Vet Dashboard
+
+* View pets
+* Add vaccination record
+* Add notes
+* Mark verified
+
+---
+
+### 5. Admin Dashboard
+
+* List pets
+* Filter by status
+* Show stats (total, verified, pending)
+
+---
+
+### 6. Pet Profile Page
+
+* Full identity details
+* Health records timeline
+* Verification status
+
+---
+
+## Design Requirements
+
+* Clean, modern SaaS UI
+* Inspired by Petnow (simple, minimal)
+* Light theme (white/blue/gray)
+* Card-based layout
+* Responsive
+* No flashy animations
+
+---
+
+## Functional Requirements
+
+* Use Prisma for DB operations
+* Implement CRUD properly
+* Use API routes or server actions
+* Handle loading + empty states
+* Clean code structure
+
+---
+
+## Constraints
+
+* NO real AI (mock it)
+* NO blockchain
+* NO complex auth
+* Focus on core workflow:
+
+1. Register pet
+2. Store in PostgreSQL
+3. Search & verify
+4. Update records
+
+---
+
+## Output
+
+* Full working project
+* Prisma schema
+* All pages implemented
+* Clean UI
+* Demo-ready product
+
+The final result should feel like a **real SaaS platform similar in simplicity to Petnow, but designed as a verification infrastructure product.**

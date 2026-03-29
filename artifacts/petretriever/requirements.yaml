@@ -1,0 +1,22 @@
+packages:
+  "framer-motion": "For page transitions and smooth micro-interactions"
+  "recharts": "For the admin dashboard statistics visualization"
+  "date-fns": "For formatting vaccination and medical record dates"
+  "clsx": "For conditional tailwind class merging"
+  "tailwind-merge": "For reliable tailwind class merging"
+  "react-hook-form": "For robust form state management and validation"
+  "@hookform/resolvers": "For integrating Zod validation with react-hook-form"
+  "lucide-react": "For beautiful consistent icons across the UI"
+
+images:
+  - path: "artifacts/petretriever/public/images/hero-pets.png"
+    description: "A high-quality, professional, brightly lit photo of a happy golden retriever and a calm tabby cat sitting together on a clean minimal background. Trustworthy and welcoming vibe."
+    aspect_ratio: "16:9"
+  - path: "artifacts/petretriever/public/images/logo-paw.png"
+    description: "A minimal, modern, premium tech startup logo featuring a geometric paw print in bright primary blue on a transparent background."
+    aspect_ratio: "1:1"
+
+notes:
+  - Using generated Orval hooks from @workspace/api-client-react for all data fetching.
+  - Using Wouter for routing.
+  - Relying on Lucide React for iconography.

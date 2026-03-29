@@ -1,22 +1,30 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: PetRetriever API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: pets
+    description: Pet management
+  - name: owners
+    description: Owner management
+  - name: vaccinations
+    description: Vaccination records
+  - name: medical
+    description: Medical records
+  - name: admin
+    description: Admin operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +32,270 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /pets:
+    get:
+      operationId: listPets
+      tags: [pets]
+      summary: List all pets
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [Verified, Pending, Incomplete]
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PetWithOwner"
+    post:
+      operationId: createPet
+      tags: [pets]
+      summary: Register a new pet
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePetRequest"
+      responses:
+        "201":
+          description: Pet created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetWithOwner"
+
+  /pets/{id}:
+    get:
+      operationId: getPet
+      tags: [pets]
+      summary: Get pet by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pet details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetProfile"
+        "404":
+          description: Pet not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    patch:
+      operationId: updatePet
+      tags: [pets]
+      summary: Update pet details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePetRequest"
+      responses:
+        "200":
+          description: Pet updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetWithOwner"
+
+  /pets/verify:
+    get:
+      operationId: verifyPet
+      tags: [pets]
+      summary: Verify a pet by Pet ID, phone, or microchip
+      parameters:
+        - name: petId
+          in: query
+          schema:
+            type: string
+        - name: phone
+          in: query
+          schema:
+            type: string
+        - name: microchipId
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pet verification result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PetProfile"
+        "404":
+          description: No pets found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /pets/{id}/vaccinations:
+    get:
+      operationId: getPetVaccinations
+      tags: [vaccinations]
+      summary: Get vaccinations for a pet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Vaccination records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VaccinationRecord"
+    post:
+      operationId: addVaccination
+      tags: [vaccinations]
+      summary: Add a vaccination record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVaccinationRequest"
+      responses:
+        "201":
+          description: Vaccination added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VaccinationRecord"
+
+  /pets/{id}/medical:
+    get:
+      operationId: getPetMedicalRecords
+      tags: [medical]
+      summary: Get medical records for a pet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Medical records
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MedicalRecord"
+    post:
+      operationId: addMedicalRecord
+      tags: [medical]
+      summary: Add a medical record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMedicalRequest"
+      responses:
+        "201":
+          description: Medical record added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MedicalRecord"
+
+  /pets/{id}/verify:
+    patch:
+      operationId: markPetVerified
+      tags: [pets]
+      summary: Mark a pet as verified
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pet verified
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PetWithOwner"
+
+  /admin/stats:
+    get:
+      operationId: getAdminStats
+      tags: [admin]
+      summary: Get admin statistics
+      responses:
+        "200":
+          description: Stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStats"
+
+  /upload:
+    post:
+      operationId: uploadPhoto
+      tags: [pets]
+      summary: Upload a pet photo (returns URL)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadPhotoRequest"
+      responses:
+        "200":
+          description: Photo uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadPhotoResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +306,257 @@ components:
       required:
         - status
 
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    Pet:
+      type: object
+      properties:
+        id:
+          type: string
+        petId:
+          type: string
+        name:
+          type: string
+        species:
+          type: string
+        breed:
+          type: string
+        age:
+          type: number
+        gender:
+          type: string
+          enum: [Male, Female, Unknown]
+        microchipId:
+          type: string
+          nullable: true
+        photoUrl:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [Verified, Pending, Incomplete]
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - petId
+        - name
+        - species
+        - breed
+        - age
+        - gender
+        - status
+        - createdAt
+
+    Owner:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+          nullable: true
+      required:
+        - id
+        - name
+        - phone
+
+    PetWithOwner:
+      allOf:
+        - $ref: "#/components/schemas/Pet"
+        - type: object
+          properties:
+            owner:
+              $ref: "#/components/schemas/Owner"
+
+    PetProfile:
+      allOf:
+        - $ref: "#/components/schemas/PetWithOwner"
+        - type: object
+          properties:
+            vaccinations:
+              type: array
+              items:
+                $ref: "#/components/schemas/VaccinationRecord"
+            medicalRecords:
+              type: array
+              items:
+                $ref: "#/components/schemas/MedicalRecord"
+
+    VaccinationRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        petId:
+          type: string
+        type:
+          type: string
+        date:
+          type: string
+          format: date-time
+        verified:
+          type: boolean
+        notes:
+          type: string
+          nullable: true
+      required:
+        - id
+        - petId
+        - type
+        - date
+        - verified
+
+    MedicalRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        petId:
+          type: string
+        notes:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - petId
+        - notes
+        - createdAt
+
+    AdminStats:
+      type: object
+      properties:
+        total:
+          type: number
+        verified:
+          type: number
+        pending:
+          type: number
+        incomplete:
+          type: number
+        recentRegistrations:
+          type: number
+      required:
+        - total
+        - verified
+        - pending
+        - incomplete
+        - recentRegistrations
+
+    CreatePetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        species:
+          type: string
+        breed:
+          type: string
+        age:
+          type: number
+        gender:
+          type: string
+          enum: [Male, Female, Unknown]
+        microchipId:
+          type: string
+          nullable: true
+        photoUrl:
+          type: string
+          nullable: true
+        ownerName:
+          type: string
+        ownerPhone:
+          type: string
+        ownerEmail:
+          type: string
+          nullable: true
+      required:
+        - name
+        - species
+        - breed
+        - age
+        - gender
+        - ownerName
+        - ownerPhone
+
+    UpdatePetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        species:
+          type: string
+        breed:
+          type: string
+        age:
+          type: number
+        gender:
+          type: string
+          enum: [Male, Female, Unknown]
+        microchipId:
+          type: string
+          nullable: true
+        photoUrl:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [Verified, Pending, Incomplete]
+
+    CreateVaccinationRequest:
+      type: object
+      properties:
+        type:
+          type: string
+        date:
+          type: string
+          format: date-time
+        verified:
+          type: boolean
+        notes:
+          type: string
+          nullable: true
+      required:
+        - type
+        - date
+        - verified
+
+    CreateMedicalRequest:
+      type: object
+      properties:
+        notes:
+          type: string
+      required:
+        - notes
+
+    UploadPhotoRequest:
+      type: object
+      properties:
+        filename:
+          type: string
+        dataUrl:
+          type: string
+      required:
+        - filename
+        - dataUrl
+
+    UploadPhotoResponse:
+      type: object
+      properties:
+        url:
+          type: string
+      required:
+        - url
