@@ -87,15 +87,15 @@ router.get("/pets/verify", async (req, res) => {
       res.status(400).json({ error: "Invalid query params" });
       return;
     }
-    const { petId, phone, microchipId } = parsed.data;
-    if (!petId && !phone && !microchipId) {
-      res.status(400).json({ error: "Provide petId, phone, or microchipId" });
+    const { petId, phone, rhinariumId } = parsed.data;
+    if (!petId && !phone && !rhinariumId) {
+      res.status(400).json({ error: "Provide petId, phone, or rhinariumId" });
       return;
     }
 
     const conditions = [];
     if (petId) conditions.push(eq(petsTable.petId, petId));
-    if (microchipId) conditions.push(eq(petsTable.microchipId, microchipId));
+    if (rhinariumId) conditions.push(eq(petsTable.rhinariumId, rhinariumId));
 
     let petIds: string[] = [];
     if (conditions.length) {
@@ -173,7 +173,7 @@ router.post("/pets", async (req, res) => {
         breed: petData.breed,
         age: petData.age,
         gender: (petData.gender as any) ?? "Unknown",
-        microchipId: petData.microchipId ?? null,
+        rhinariumId: petData.rhinariumId ?? null,
         photoUrl: petData.photoUrl ?? null,
         status: "Pending",
         ownerId: owner.id,

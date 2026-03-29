@@ -127,7 +127,7 @@ paths:
     get:
       operationId: verifyPet
       tags: [pets]
-      summary: Verify a pet by Pet ID, phone, or microchip
+      summary: Verify a pet by Pet ID, phone, or rhinarium
       parameters:
         - name: petId
           in: query
@@ -137,7 +137,7 @@ paths:
           in: query
           schema:
             type: string
-        - name: microchipId
+        - name: rhinariumId
           in: query
           schema:
             type: string
@@ -332,7 +332,7 @@ components:
         gender:
           type: string
           enum: [Male, Female, Unknown]
-        microchipId:
+        rhinariumId:
           type: string
           nullable: true
         photoUrl:
@@ -470,7 +470,7 @@ components:
         gender:
           type: string
           enum: [Male, Female, Unknown]
-        microchipId:
+        rhinariumId:
           type: string
           nullable: true
         photoUrl:
@@ -506,7 +506,7 @@ components:
         gender:
           type: string
           enum: [Male, Female, Unknown]
-        microchipId:
+        rhinariumId:
           type: string
           nullable: true
         photoUrl:

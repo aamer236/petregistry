@@ -21,7 +21,7 @@ const registerSchema = z.object({
   breed: z.string().min(1, "Breed required"),
   age: z.coerce.number().min(0, "Age must be 0 or greater"),
   gender: z.enum(["Male", "Female", "Unknown"]),
-  microchipId: z.string().optional().or(z.literal("")),
+  rhinariumId: z.string().optional().or(z.literal("")),
 });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
@@ -96,7 +96,7 @@ export function RegisterPage() {
     if (step === 1) {
       valid = await form.trigger(["ownerName", "ownerPhone", "ownerEmail"]);
     } else if (step === 2) {
-      valid = await form.trigger(["name", "species", "breed", "age", "gender", "microchipId"]);
+      valid = await form.trigger(["name", "species", "breed", "age", "gender", "rhinariumId"]);
     }
     
     if (valid) {
@@ -225,8 +225,8 @@ export function RegisterPage() {
               </div>
 
               <div>
-                <Label>Microchip ID (Optional)</Label>
-                <Input {...form.register("microchipId")} placeholder="981020000000000" className="mt-1" />
+                <Label>Rhinarium / Nose Print ID (Optional)</Label>
+                <Input {...form.register("rhinariumId")} placeholder="e.g. RH-2024-A9X3" className="mt-1" />
               </div>
             </div>
 

@@ -9,5 +9,5 @@
 export type VerifyPetParams = {
   petId?: string;
   phone?: string;
-  microchipId?: string;
+  rhinariumId?: string;
 };

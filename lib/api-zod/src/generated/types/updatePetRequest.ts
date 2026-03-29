@@ -14,7 +14,7 @@ export interface UpdatePetRequest {
   breed?: string;
   age?: number;
   gender?: UpdatePetRequestGender;
-  microchipId?: string | null;
+  rhinariumId?: string | null;
   photoUrl?: string | null;
   status?: UpdatePetRequestStatus;
 }

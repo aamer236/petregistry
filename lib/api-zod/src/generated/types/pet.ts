@@ -16,7 +16,7 @@ export interface Pet {
   breed: string;
   age: number;
   gender: PetGender;
-  microchipId?: string | null;
+  rhinariumId?: string | null;
   photoUrl?: string | null;
   status: PetStatus;
   createdAt: Date;

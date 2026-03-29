@@ -10,7 +10,7 @@ import { Search, Loader2, PawPrint, Phone, Hash } from "lucide-react";
 export function VerifyPage() {
   const [activeTab, setActiveTab] = useState("petId");
   const [searchValue, setSearchValue] = useState("");
-  const [submittedQuery, setSubmittedQuery] = useState<{ petId?: string; phone?: string; microchipId?: string } | null>(null);
+  const [submittedQuery, setSubmittedQuery] = useState<{ petId?: string; phone?: string; rhinariumId?: string } | null>(null);
 
   const { data: results, isLoading, isError } = useVerifyPet(submittedQuery || {}, {
     query: { enabled: !!submittedQuery }
@@ -23,7 +23,7 @@ export function VerifyPage() {
     setSubmittedQuery({
       petId: activeTab === "petId" ? searchValue : undefined,
       phone: activeTab === "phone" ? searchValue : undefined,
-      microchipId: activeTab === "microchip" ? searchValue : undefined,
+      rhinariumId: activeTab === "rhinarium" ? searchValue : undefined,
     });
   };
 
@@ -45,8 +45,8 @@ export function VerifyPage() {
             <TabsTrigger value="phone" className="rounded-xl py-3 data-[state=active]:shadow-sm">
               <Phone className="w-4 h-4 mr-2" /> <span className="hidden sm:inline">Owner Phone</span>
             </TabsTrigger>
-            <TabsTrigger value="microchip" className="rounded-xl py-3 data-[state=active]:shadow-sm">
-              <Hash className="w-4 h-4 mr-2" /> <span className="hidden sm:inline">Microchip</span>
+            <TabsTrigger value="rhinarium" className="rounded-xl py-3 data-[state=active]:shadow-sm">
+              <Hash className="w-4 h-4 mr-2" /> <span className="hidden sm:inline">Rhinarium</span>
             </TabsTrigger>
           </TabsList>
 
@@ -59,7 +59,7 @@ export function VerifyPage() {
                 placeholder={
                   activeTab === "petId" ? "Enter Pet ID (e.g. PR-12345)" :
                   activeTab === "phone" ? "Enter Phone Number" :
-                  "Enter Microchip Number"
+                  "Enter Rhinarium Number"
                 }
                 className="pl-12 h-14 text-lg rounded-xl bg-white border-2 focus-visible:ring-0 focus-visible:border-primary"
               />

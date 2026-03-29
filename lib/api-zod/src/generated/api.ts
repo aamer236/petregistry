@@ -31,7 +31,7 @@ export const ListPetsResponseItem = zod
     breed: zod.string(),
     age: zod.number(),
     gender: zod.enum(["Male", "Female", "Unknown"]),
-    microchipId: zod.string().nullish(),
+    rhinariumId: zod.string().nullish(),
     photoUrl: zod.string().nullish(),
     status: zod.enum(["Verified", "Pending", "Incomplete"]),
     createdAt: zod.coerce.date(),
@@ -59,7 +59,7 @@ export const CreatePetBody = zod.object({
   breed: zod.string(),
   age: zod.number(),
   gender: zod.enum(["Male", "Female", "Unknown"]),
-  microchipId: zod.string().nullish(),
+  rhinariumId: zod.string().nullish(),
   photoUrl: zod.string().nullish(),
   ownerName: zod.string(),
   ownerPhone: zod.string(),
@@ -82,7 +82,7 @@ export const GetPetResponse = zod
     breed: zod.string(),
     age: zod.number(),
     gender: zod.enum(["Male", "Female", "Unknown"]),
-    microchipId: zod.string().nullish(),
+    rhinariumId: zod.string().nullish(),
     photoUrl: zod.string().nullish(),
     status: zod.enum(["Verified", "Pending", "Incomplete"]),
     createdAt: zod.coerce.date(),
@@ -139,7 +139,7 @@ export const UpdatePetBody = zod.object({
   breed: zod.string().optional(),
   age: zod.number().optional(),
   gender: zod.enum(["Male", "Female", "Unknown"]).optional(),
-  microchipId: zod.string().nullish(),
+  rhinariumId: zod.string().nullish(),
   photoUrl: zod.string().nullish(),
   status: zod.enum(["Verified", "Pending", "Incomplete"]).optional(),
 });
@@ -153,7 +153,7 @@ export const UpdatePetResponse = zod
     breed: zod.string(),
     age: zod.number(),
     gender: zod.enum(["Male", "Female", "Unknown"]),
-    microchipId: zod.string().nullish(),
+    rhinariumId: zod.string().nullish(),
     photoUrl: zod.string().nullish(),
     status: zod.enum(["Verified", "Pending", "Incomplete"]),
     createdAt: zod.coerce.date(),
@@ -172,12 +172,12 @@ export const UpdatePetResponse = zod
   );
 
 /**
- * @summary Verify a pet by Pet ID, phone, or microchip
+ * @summary Verify a pet by Pet ID, phone, or rhinarium
  */
 export const VerifyPetQueryParams = zod.object({
   petId: zod.coerce.string().optional(),
   phone: zod.coerce.string().optional(),
-  microchipId: zod.coerce.string().optional(),
+  rhinariumId: zod.coerce.string().optional(),
 });
 
 export const VerifyPetResponseItem = zod
@@ -189,7 +189,7 @@ export const VerifyPetResponseItem = zod
     breed: zod.string(),
     age: zod.number(),
     gender: zod.enum(["Male", "Female", "Unknown"]),
-    microchipId: zod.string().nullish(),
+    rhinariumId: zod.string().nullish(),
     photoUrl: zod.string().nullish(),
     status: zod.enum(["Verified", "Pending", "Incomplete"]),
     createdAt: zod.coerce.date(),
@@ -311,7 +311,7 @@ export const MarkPetVerifiedResponse = zod
     breed: zod.string(),
     age: zod.number(),
     gender: zod.enum(["Male", "Female", "Unknown"]),
-    microchipId: zod.string().nullish(),
+    rhinariumId: zod.string().nullish(),
     photoUrl: zod.string().nullish(),
     status: zod.enum(["Verified", "Pending", "Incomplete"]),
     createdAt: zod.coerce.date(),

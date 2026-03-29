@@ -99,12 +99,12 @@ export function PetProfilePage() {
             )}
           </div>
 
-          {pet.microchipId && (
+          {pet.rhinariumId && (
             <div className="glass-card rounded-2xl p-6">
               <h3 className="text-lg font-bold flex items-center gap-2 mb-2">
-                <Hash className="w-5 h-5 text-primary" /> Microchip ID
+                <Hash className="w-5 h-5 text-primary" /> Rhinarium ID
               </h3>
-              <p className="font-mono text-lg">{pet.microchipId}</p>
+              <p className="font-mono text-lg">{pet.rhinariumId}</p>
             </div>
           )}
           

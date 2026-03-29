@@ -21,7 +21,7 @@ export const petsTable = pgTable("pets", {
   breed: text("breed").notNull(),
   age: integer("age").notNull(),
   gender: genderEnum("gender").notNull().default("Unknown"),
-  microchipId: text("microchip_id"),
+  rhinariumId: text("rhinarium_id"),
   photoUrl: text("photo_url"),
   status: petStatusEnum("status").notNull().default("Pending"),
   ownerId: uuid("owner_id").notNull().references(() => ownersTable.id),

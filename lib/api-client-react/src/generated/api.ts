@@ -461,7 +461,7 @@ export const useUpdatePet = <
 };
 
 /**
- * @summary Verify a pet by Pet ID, phone, or microchip
+ * @summary Verify a pet by Pet ID, phone, or rhinarium
  */
 export const getVerifyPetUrl = (params?: VerifyPetParams) => {
   const normalizedParams = new URLSearchParams();
@@ -528,7 +528,7 @@ export type VerifyPetQueryResult = NonNullable<
 export type VerifyPetQueryError = ErrorType<ErrorResponse>;
 
 /**
- * @summary Verify a pet by Pet ID, phone, or microchip
+ * @summary Verify a pet by Pet ID, phone, or rhinarium
  */
 
 export function useVerifyPet<

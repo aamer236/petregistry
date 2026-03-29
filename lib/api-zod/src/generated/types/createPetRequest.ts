@@ -13,7 +13,7 @@ export interface CreatePetRequest {
   breed: string;
   age: number;
   gender: CreatePetRequestGender;
-  microchipId?: string | null;
+  rhinariumId?: string | null;
   photoUrl?: string | null;
   ownerName: string;
   ownerPhone: string;

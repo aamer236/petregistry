@@ -37,7 +37,7 @@ export interface Pet {
   breed: string;
   age: number;
   gender: PetGender;
-  microchipId?: string | null;
+  rhinariumId?: string | null;
   photoUrl?: string | null;
   status: PetStatus;
   createdAt: string;
@@ -98,7 +98,7 @@ export interface CreatePetRequest {
   breed: string;
   age: number;
   gender: CreatePetRequestGender;
-  microchipId?: string | null;
+  rhinariumId?: string | null;
   photoUrl?: string | null;
   ownerName: string;
   ownerPhone: string;
@@ -129,7 +129,7 @@ export interface UpdatePetRequest {
   breed?: string;
   age?: number;
   gender?: UpdatePetRequestGender;
-  microchipId?: string | null;
+  rhinariumId?: string | null;
   photoUrl?: string | null;
   status?: UpdatePetRequestStatus;
 }
@@ -171,5 +171,5 @@ export const ListPetsStatus = {
 export type VerifyPetParams = {
   petId?: string;
   phone?: string;
-  microchipId?: string;
+  rhinariumId?: string;
 };
