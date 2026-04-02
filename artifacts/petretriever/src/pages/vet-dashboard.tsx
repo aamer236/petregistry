@@ -13,7 +13,8 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export function VetDashboardPage() {
   const [search, setSearch] = useState("");
-  const { data: pets, isLoading } = useListPets({ search });
+  const { data: petsData, isLoading, isError } = useListPets({ search });
+  const pets = Array.isArray(petsData) ? petsData : [];
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
@@ -38,9 +39,13 @@ export function VetDashboardPage() {
           <div className="flex justify-center py-20">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
+        ) : isError ? (
+          <div className="py-20 text-center text-destructive">
+            Unable to load pets — API server not connected.
+          </div>
         ) : (
           <div className="divide-y divide-border">
-            {pets?.map(pet => (
+            {pets.map(pet => (
               <div key={pet.id} className="p-4 sm:p-6 flex flex-col md:flex-row gap-6 items-start md:items-center hover:bg-slate-50 transition-colors">
                 <div className="flex-1 flex gap-4 items-center">
                   <div className="w-16 h-16 rounded-full bg-muted overflow-hidden shrink-0 border-2 border-white shadow-sm">
@@ -68,7 +73,7 @@ export function VetDashboardPage() {
               </div>
             ))}
             
-            {pets?.length === 0 && (
+            {pets.length === 0 && (
               <div className="py-20 text-center text-muted-foreground">
                 No pets found matching your search.
               </div>

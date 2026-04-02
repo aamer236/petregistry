@@ -7,7 +7,8 @@ import { formatDate } from "@/lib/utils";
 
 export function AdminDashboardPage() {
   const { data: stats } = useGetAdminStats();
-  const { data: pets } = useListPets();
+  const { data: petsData, isLoading: petsLoading, isError: petsError } = useListPets();
+  const pets = Array.isArray(petsData) ? petsData : [];
 
   const chartData = stats ? [
     { name: 'Verified', count: stats.verified, fill: 'hsl(var(--success))' },
@@ -71,7 +72,19 @@ export function AdminDashboardPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
-                    {pets?.map((pet) => (
+                    {petsLoading ? (
+                      <tr>
+                        <td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">Loading registrations…</td>
+                      </tr>
+                    ) : petsError ? (
+                      <tr>
+                        <td colSpan={5} className="px-6 py-8 text-center text-destructive">Unable to load pets — API server not connected.</td>
+                      </tr>
+                    ) : pets.length === 0 ? (
+                      <tr>
+                        <td colSpan={5} className="px-6 py-8 text-center text-muted-foreground">No registrations found.</td>
+                      </tr>
+                    ) : pets.map((pet) => (
                       <tr key={pet.id} className="bg-white hover:bg-slate-50/50 transition-colors">
                         <td className="px-6 py-4 font-mono font-medium">{pet.petId}</td>
                         <td className="px-6 py-4">
@@ -88,6 +101,7 @@ export function AdminDashboardPage() {
                       </tr>
                     ))}
                   </tbody>
+
                 </table>
               </div>
             </CardContent>
