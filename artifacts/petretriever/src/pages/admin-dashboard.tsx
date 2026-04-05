@@ -1,14 +1,17 @@
 import { useGetAdminStats, useListPets } from "@workspace/api-client-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatusBadge } from "@/components/status-badge";
-import { PawPrint, CheckCircle2, Clock, AlertCircle, Activity } from "lucide-react";
+import { PawPrint, CheckCircle2, Clock, AlertCircle, Activity, LogOut } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { formatDate } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useAdminAuth } from "@/hooks/use-admin-auth";
 
 export function AdminDashboardPage() {
   const { data: stats } = useGetAdminStats();
   const { data: petsData, isLoading: petsLoading, isError: petsError } = useListPets();
   const pets = Array.isArray(petsData) ? petsData : [];
+  const { logout, admin } = useAdminAuth();
 
   const chartData = stats ? [
     { name: 'Verified', count: stats.verified, fill: 'hsl(var(--success))' },
@@ -18,9 +21,15 @@ export function AdminDashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
-      <div className="mb-10">
-        <h1 className="text-3xl font-display font-bold text-foreground">Platform Administration</h1>
-        <p className="text-muted-foreground mt-2">Overview of registrations and verification statuses.</p>
+      <div className="flex justify-between items-start mb-10">
+        <div>
+          <h1 className="text-3xl font-display font-bold text-foreground">Platform Administration</h1>
+          <p className="text-muted-foreground mt-2">Welcome back, {admin?.name || "Admin"}. Overview of registrations and verification statuses.</p>
+        </div>
+        <Button variant="outline" onClick={logout} className="gap-2 shrink-0">
+          <LogOut className="w-4 h-4" />
+          Log Out
+        </Button>
       </div>
 
       {/* Stats Cards */}

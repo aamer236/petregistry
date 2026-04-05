@@ -3,7 +3,8 @@ import { useListPets, useAddVaccination, useAddMedicalRecord, useMarkPetVerified
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/status-badge";
-import { Search, Plus, CheckCircle2, Syringe, ClipboardList, Loader2 } from "lucide-react";
+import { Search, Plus, CheckCircle2, Syringe, ClipboardList, Loader2, LogOut } from "lucide-react";
+import { useVetAuth } from "@/hooks/use-vet-auth";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,22 +16,29 @@ export function VetDashboardPage() {
   const [search, setSearch] = useState("");
   const { data: petsData, isLoading, isError } = useListPets({ search });
   const pets = Array.isArray(petsData) ? petsData : [];
+  const { logout, vet } = useVetAuth();
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 mb-10">
         <div>
           <h1 className="text-3xl font-display font-bold text-foreground">Veterinarian Dashboard</h1>
-          <p className="text-muted-foreground mt-2">Manage pet health records and verify identities.</p>
+          <p className="text-muted-foreground mt-2">Welcome back, {vet?.name || "Dr. Vet"}. Manage pet health records and verify identities.</p>
         </div>
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search pets..." 
-            className="pl-9 bg-white"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
+        <div className="flex gap-4 items-center w-full sm:w-auto">
+          <div className="relative w-full sm:w-72">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input 
+              placeholder="Search pets..." 
+              className="pl-9 bg-white"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+            />
+          </div>
+          <Button variant="outline" onClick={logout} className="gap-2 shrink-0">
+            <LogOut className="w-4 h-4" />
+            <span className="hidden sm:inline">Log Out</span>
+          </Button>
         </div>
       </div>
 
